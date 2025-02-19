@@ -19,12 +19,14 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     public GameObject PickUpParent;
+    AudioSource pickUpSource;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb = GetComponent <Rigidbody>(); 
+        pickUpSource = GetComponent<AudioSource>();
         count = 0; 
         count_num = PickUpParent.transform.childCount;
         Debug.Log($"There are {count_num} points to be picked up");
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("PickUp")) 
         {
             other.gameObject.SetActive(false);
+            playPickup();
             count = count + 1;
             SetCountText();
         }
@@ -82,5 +85,10 @@ public class PlayerController : MonoBehaviour
             winTextObject.SetActive(true);
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
+    }
+
+    void playPickup()
+    {
+        pickUpSource.Play();
     }
 }
