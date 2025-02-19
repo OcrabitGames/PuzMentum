@@ -74,6 +74,10 @@ public class PlayerController : MonoBehaviour
             // Update the winText to display "You Lose!"
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+        } 
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+            collision.gameObject.GetComponent<AudioSource>().Play();
         }
     }
     
