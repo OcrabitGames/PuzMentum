@@ -82,10 +82,17 @@ public class PlayerController : MonoBehaviour
         countText.text =  "Count: " + count.ToString();
         if (count >= count_num)
         {
-            winTextObject.SetActive(true);
-            soundManager.PlayWinSound();
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+            OnWin();
         }
+    }
+
+    void OnWin()
+    {
+        winTextObject.SetActive(true);
+        soundManager.PlayWinSound();
+        fx_controller.center_player(gameObject.transform);
+        fx_controller.play_win();
+        Destroy(GameObject.FindGameObjectWithTag("Enemy"));
     }
 
     void OnCollect()
