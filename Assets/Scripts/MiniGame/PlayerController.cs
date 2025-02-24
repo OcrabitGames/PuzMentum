@@ -69,12 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Destroy the current object
-            Destroy(gameObject); 
-            // Update the winText to display "You Lose!"
-            winTextObject.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-            collision.gameObject.GetComponent<AudioSource>().Play();
+            OnEnemyHit(collision);
         } 
         else if (collision.gameObject.CompareTag("Wall"))
         {
@@ -95,9 +90,23 @@ public class PlayerController : MonoBehaviour
 
     void OnCollect()
     {
+        fx_controller.center_player(gameObject.transform);
         fx_controller.play_collect();
         soundManager.PlayPickUpSound();
         count = count + 1;
         SetCountText();
+    }
+    
+    void OnEnemyHit(Collision enemy)
+    {
+        // Destroy the current object
+        Destroy(gameObject); 
+        // Update the winText to display "You Lose!"
+        winTextObject.gameObject.SetActive(true);
+        winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+        enemy.gameObject.GetComponent<AudioSource>().Play();
+        // Play FX
+        fx_controller.center_player(gameObject.transform);
+        fx_controller.play_death();
     }
 }
