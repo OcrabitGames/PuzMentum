@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - PressurePlate
   - AfterImage
+  - Wall
   layers:
   - Default
   - TransparentFX

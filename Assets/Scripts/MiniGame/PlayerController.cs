@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
     public GameObject PickUpParent;
     PlayerSoudManager soundManager;
+    FX_Controller fx_controller;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent <Rigidbody>(); 
         soundManager = GetComponent<PlayerSoudManager>();
+        fx_controller = GetComponent<FX_Controller>();
         count = 0; 
         count_num = PickUpParent.transform.childCount;
         Debug.Log($"There are {count_num} points to be picked up");
@@ -59,9 +61,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("PickUp")) 
         {
             other.gameObject.SetActive(false);
-            soundManager.PlayPickUpSound();
-            count = count + 1;
-            SetCountText();
+            OnCollect();
         }
     }
     
@@ -91,5 +91,13 @@ public class PlayerController : MonoBehaviour
             soundManager.PlayWinSound();
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
+    }
+
+    void OnCollect()
+    {
+        fx_controller.play_collect();
+        soundManager.PlayPickUpSound();
+        count = count + 1;
+        SetCountText();
     }
 }
