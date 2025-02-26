@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -5,15 +6,20 @@ public class PressurePlate : MonoBehaviour
 {
     public GameObject target;
     private bool activated = false;
+    Vector3 _activatedPosition;
+    Vector3 _originalPosition;
     
     // Trigger Frames
     private int lastTriggerFrame = 0;
     private int frameThreshold = 100;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Start()
     {
+        // Set positions
+        _originalPosition = target.transform.position;
+        _activatedPosition = target.transform.position;
         
+        _activatedPosition.y = -0.99f;
     }
 
     // Update is called once per frame
@@ -25,15 +31,9 @@ public class PressurePlate : MonoBehaviour
             DeactivateTarget();
         }
     }
-
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     Debug.Log(collision.gameObject.tag);
-    // }
     
     private void OnTriggerStay(Collider collider)
     {
-        Debug.Log(lastTriggerFrame);
         if (!activated && collider.gameObject.tag == "AfterImage")
         {
             activated = true;
@@ -44,11 +44,11 @@ public class PressurePlate : MonoBehaviour
 
     private void ActivateTarget()
     {
-        target.SetActive(false);
+        target.transform.position = _activatedPosition;
     }
     
     private void DeactivateTarget()
     {
-        target.SetActive(true);
+        target.transform.position = _originalPosition;
     }
 }

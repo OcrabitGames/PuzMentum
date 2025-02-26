@@ -9,6 +9,8 @@ TagManager:
   - PressurePlate
   - AfterImage
   - Wall
+  - Key
+  - MainGate
   layers:
   - Default
   - TransparentFX

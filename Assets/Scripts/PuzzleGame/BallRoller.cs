@@ -14,12 +14,13 @@ public class BallRoller : MonoBehaviour
     private int count_num;
     
     // Public Values
-    public float speed = 0; 
+    public float speed = 0;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb = GetComponent <Rigidbody>(); 
+        
     }
 
     // Update is called once per frame
@@ -45,12 +46,12 @@ public class BallRoller : MonoBehaviour
     
     void OnTriggerEnter(Collider other) 
     {
-        // if (other.gameObject.CompareTag("PickUp")) 
-        // {
-        //     other.gameObject.SetActive(false);
-        //     count = count + 1;
-        //     SetCountText();
-        // }
+        if (other.gameObject.CompareTag("MainGate")) 
+        {
+            //other.gameObject.SetActive(false);
+            //count = count + 1;
+            //SetCountText();
+        }
     }
     
     private void OnCollisionEnter(Collision collision)
