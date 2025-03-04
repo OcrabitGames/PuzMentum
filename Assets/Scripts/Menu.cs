@@ -5,6 +5,7 @@ public class Menu : MonoBehaviour
 {
     public void GoToMenu()
     {
+        Debug.Log("Going to menu");
         SceneManager.LoadScene("Menu");
     }
     public void GoToPuzzle1()
