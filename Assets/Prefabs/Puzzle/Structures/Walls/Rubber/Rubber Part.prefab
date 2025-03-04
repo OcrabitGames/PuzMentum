@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 892577442862407750}
   - component: {fileID: 7546213239487472729}
   m_Layer: 0
-  m_Name: Concrete Wall Part
+  m_Name: Rubber Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cf9dc8e5187a04366a7005e0a430e840, type: 2}
+  - {fileID: 2100000, guid: 829a94d5762ad4a60a30c114873d98b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4691514054591210740}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 300279b83bd774224987ab309f7a1f49, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
