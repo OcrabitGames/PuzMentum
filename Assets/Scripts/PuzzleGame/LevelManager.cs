@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+    public bool debugMode;
     
     [System.Serializable]
     public class LevelData
@@ -31,6 +32,8 @@ public class LevelManager : MonoBehaviour
     
     private void Start()
     {
+        if (debugMode) return;
+        
         if (SceneManager.GetActiveScene().name != levels[currentLevelIndex].sceneName)
         {
             SceneManager.LoadScene(levels[currentLevelIndex].sceneName);
@@ -66,7 +69,7 @@ public class LevelManager : MonoBehaviour
         return keysCollected == levels[currentLevelIndex].requiredKeys;
     }
 
-    public void NextLevel()
+    public void NextLevel(GameObject player)
     {
         if (keysCollected >= levels[currentLevelIndex].requiredKeys) {
             int nextLevelIndex = currentLevelIndex + 1;
