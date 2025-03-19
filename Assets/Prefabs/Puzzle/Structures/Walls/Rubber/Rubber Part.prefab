@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7546213239487472729}
   m_Layer: 0
   m_Name: Rubber Part
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
