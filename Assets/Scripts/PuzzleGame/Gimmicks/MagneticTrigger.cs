@@ -1,3 +1,4 @@
+using PuzzleGame.Gimmicks;
 using UnityEngine;
 
 public class MagneticTrigger : MonoBehaviour
@@ -14,7 +15,7 @@ public class MagneticTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _magneticMover.ActivateMovement(other.transform);
+            _magneticMover.TriggerMovement(other.transform);
         }
     }
 

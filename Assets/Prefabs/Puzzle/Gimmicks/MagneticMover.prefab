@@ -1320,6 +1320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b7bdde2054a49fbbc7191fd89ddc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alwaysActive: 0
   fieldCooldownTime: 3
+  activeMaterial: {fileID: 2100000, guid: 8f326609902ff4c2ca344d989a44a8d4, type: 2}
+  inactiveMaterial: {fileID: 2100000, guid: a48ee462c38ee479cac923c3f21afb0a, type: 2}
   endTarget: {fileID: 0}
   speed: 1.5
