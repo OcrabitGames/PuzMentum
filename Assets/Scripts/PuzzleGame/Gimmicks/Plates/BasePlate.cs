@@ -4,27 +4,27 @@ namespace PuzzleGame.Gimmicks.Plates
 {
     public abstract class BasePlate : MonoBehaviour
     {
-        protected bool activated = false;
-        private int lastTriggerFrame = 0;
-        private int frameThreshold = 100;
+        protected bool Activated = false;
+        private int _lastTriggerFrame = 0;
+        private int _frameThreshold = 100;
 
         protected virtual void Update()
         {
-            if (activated && Time.frameCount - lastTriggerFrame > frameThreshold)
+            if (Activated && Time.frameCount - _lastTriggerFrame > _frameThreshold)
             {
-                activated = false;
+                Activated = false;
                 DeactivateTarget();
             }
         }
 
         protected virtual void OnTriggerStay(Collider collider)
         {
-            if (!activated && collider.gameObject.CompareTag("AfterImage"))
+            if (!Activated && collider.gameObject.CompareTag("AfterImage"))
             {
-                activated = true;
+                Activated = true;
                 ActivateTarget();
             }
-            lastTriggerFrame = Time.frameCount;
+            _lastTriggerFrame = Time.frameCount;
         }
 
         protected void ActivateTarget()

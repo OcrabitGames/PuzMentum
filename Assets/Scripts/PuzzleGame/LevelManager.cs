@@ -87,4 +87,10 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    public void RestartLevel()
+    {
+        LoadLevel(currentLevelIndex);
+        keysCollected = 0;
+    }
 }

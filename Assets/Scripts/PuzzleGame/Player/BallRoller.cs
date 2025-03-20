@@ -1,3 +1,5 @@
+using System.Collections;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,13 +52,21 @@ public class BallRoller : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        // if (collision.gameObject.CompareTag("Enemy"))
-        // {
-        //     // Destroy the current object
-        //     Destroy(gameObject); 
-        //     // Update the winText to display "You Lose!"
-        //     winTextObject.gameObject.SetActive(true);
-        //     winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-        // }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            StartCoroutine(RestartLevel());
+        }
+    }
+    
+    // ReSharper disable Unity.PerformanceAnalysis
+    private IEnumerator RestartLevel()
+    {
+        // Destroy Player
+        //Destroy(gameObject);
+        
+        float delay = 3f;
+        yield return new WaitForSeconds(delay); // Wait for specified time
+        LevelManager.Instance.RestartLevel(); 
+        Debug.Log("Restarting Level...");
     }
 }

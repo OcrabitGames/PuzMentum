@@ -15,11 +15,13 @@ namespace PuzzleGame.Gimmicks.Plates
 
         protected override void OnActivate()
         {
+            print("Activated OrangePlate");
             if (_magneticMover) _magneticMover.ActivateField();
         }
-
+        
         protected override void OnDeactivate()
         {
+            print("Deactivated OrangePlate");
             if (_magneticMover) _magneticMover.DeactivateField();
         }
     }

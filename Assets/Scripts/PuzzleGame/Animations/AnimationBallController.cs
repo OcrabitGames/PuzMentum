@@ -20,7 +20,16 @@ public class AnimationBallController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            animator.SetTrigger("IsBouncing");
+            ContactPoint contact = collision.contacts[0];
+            Vector3 normal = contact.normal;
+            float impactForce = collision.impulse.magnitude;
+            float forceThreshold = 2.0f;
+
+            // Check if collision is not coming from the top and has significant force
+            if (!(Vector3.Dot(normal, Vector3.up) > 0.5f) && impactForce > forceThreshold)
+            {
+                animator.SetTrigger("IsBouncing");
+            }
         }
     }
 }
