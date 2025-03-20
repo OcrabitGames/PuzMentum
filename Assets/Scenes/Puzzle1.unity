@@ -4390,6 +4390,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 797907166938632048, guid: 1d906f64833fa404689d4f5771ba0b88, type: 3}
+      propertyPath: levels.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 797907166938632048, guid: 1d906f64833fa404689d4f5771ba0b88, type: 3}
+      propertyPath: levels.Array.data[2].sceneName
+      value: Puzzle3
+      objectReference: {fileID: 0}
+    - target: {fileID: 797907166938632048, guid: 1d906f64833fa404689d4f5771ba0b88, type: 3}
+      propertyPath: levels.Array.data[2].requiredKeys
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2680644243537096051, guid: 1d906f64833fa404689d4f5771ba0b88, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.116193

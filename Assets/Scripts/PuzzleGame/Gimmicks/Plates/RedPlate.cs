@@ -19,12 +19,12 @@ namespace PuzzleGame.Gimmicks.Plates
 
         protected override void OnActivate()
         {
-            transform.position = _activatedPosition;
+            target.transform.position = _activatedPosition;
         }
 
         protected override void OnDeactivate()
         {
-            transform.position = _originalPosition;
+            target.transform.position = _originalPosition;
         }
     }
 }
