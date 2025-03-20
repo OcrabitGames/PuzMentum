@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1993840572431637560}
   - component: {fileID: 6369718811239091992}
   - component: {fileID: 8084131088754779398}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2585,7 +2585,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 97
+  m_VersionIndex: 142
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2679,7 +2679,7 @@ GameObject:
   - component: {fileID: 4950488277075774745}
   - component: {fileID: 5606243504644173420}
   - component: {fileID: 8292442551372974446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Outer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5250,7 +5250,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 97
+  m_VersionIndex: 142
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5339,7 +5339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4816207695689771311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightOrnament
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5376,7 +5376,7 @@ GameObject:
   - component: {fileID: 8591851017516764396}
   - component: {fileID: 7076693813142769542}
   - component: {fileID: 6929870341902869913}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11083,7 +11083,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8
+  m_VersionIndex: 53
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11109,7 +11109,7 @@ GameObject:
   - component: {fileID: 4627171998718389965}
   - component: {fileID: 5496950097305637197}
   - component: {fileID: 3575814454394654901}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11343,7 +11343,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8
+  m_VersionIndex: 53
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11437,7 +11437,7 @@ GameObject:
   - component: {fileID: 5339902272507681784}
   - component: {fileID: 7728490781033777942}
   - component: {fileID: 1605756286662136639}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14008,7 +14008,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 97
+  m_VersionIndex: 142
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -14097,7 +14097,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8637586089236819055}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14130,7 +14130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7821360867548854263}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftOrnament
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14169,7 +14169,7 @@ GameObject:
   - component: {fileID: 8752001492481266061}
   - component: {fileID: 3341022571565492739}
   - component: {fileID: 2254099794849629455}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16740,7 +16740,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 97
+  m_VersionIndex: 142
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -16834,7 +16834,7 @@ GameObject:
   - component: {fileID: 2161476910590671152}
   - component: {fileID: 1863657113480896986}
   - component: {fileID: 3273257560932511820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19405,7 +19405,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 97
+  m_VersionIndex: 142
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -19496,9 +19496,11 @@ GameObject:
   - component: {fileID: 8960363333132800058}
   - component: {fileID: 4387471775909176491}
   - component: {fileID: 357737063980513958}
-  m_Layer: 0
+  - component: {fileID: 4937562711908488030}
+  - component: {fileID: 88017449847714031}
+  m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19555,7 +19557,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -19564,9 +19566,50 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4937562711908488030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155339487943720359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e78d086cc9234b619cf84e6206a65af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 5
+  distanceLimit: 15
+  startFollowing: 0
+  hoverSpeed: 1.5
+  hoverHeight: 0.06
+  lookSpeed: 5
+  offsetRotation: {x: 0, y: 0.8433914, z: 0, w: -0.53729963}
+--- !u!95 &88017449847714031
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155339487943720359}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 81b8e687f586f490c94b41877a947122, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7918005191681305984
 GameObject:
   m_ObjectHideFlags: 0
@@ -19581,7 +19624,7 @@ GameObject:
   - component: {fileID: 2310754321075143397}
   - component: {fileID: 2319032325357167907}
   - component: {fileID: 6639280117537354332}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20465,7 +20508,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1535
+  m_VersionIndex: 1580
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -20586,7 +20629,7 @@ GameObject:
   - component: {fileID: 1674701636863658412}
   - component: {fileID: 8429091065449276568}
   - component: {fileID: 6134081571144174289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Outer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23157,7 +23200,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 97
+  m_VersionIndex: 142
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -23250,7 +23293,7 @@ GameObject:
   - component: {fileID: 2016408292057501749}
   - component: {fileID: 2671406817224910744}
   - component: {fileID: 8162694264700267978}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23484,7 +23527,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8
+  m_VersionIndex: 53
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -23578,7 +23621,7 @@ GameObject:
   - component: {fileID: 1064491457688999928}
   - component: {fileID: 6311802096236147029}
   - component: {fileID: 1078513945571533513}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24462,7 +24505,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1535
+  m_VersionIndex: 1580
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

@@ -1,3 +1,4 @@
+using PuzzleGame;
 using UnityEngine;
 
 public class KeyHandler : MonoBehaviour
@@ -61,6 +62,11 @@ public class KeyHandler : MonoBehaviour
             {
                 keyManager.AddKey(this);
             }
+            
+            // Play Collect Sound and Effect
+            other.GetComponent<PuzzleSoundManager>().PlayKeyPickupSound();
+            other.GetComponent<FX_Player>().PlayFXCollect();
+            
         }
     }
 }
