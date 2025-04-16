@@ -7,7 +7,7 @@ public class GateEntry : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            LevelManager.Instance.NextLevel(other.gameObject);
+            LevelManager.Instance.NextLevel();
         }
     }
 }

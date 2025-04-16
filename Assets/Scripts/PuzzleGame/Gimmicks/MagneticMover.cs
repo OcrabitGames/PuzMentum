@@ -79,6 +79,8 @@ namespace PuzzleGame.Gimmicks
                 
                 _movingToEnd = !_movingToEnd;
                 _isTriggered = false;
+                
+                if (_isTriggered) ActivateField();
             
                 if (_player)
                 {
@@ -112,7 +114,7 @@ namespace PuzzleGame.Gimmicks
             }
         }
 
-        private void QuarantineReturn()
+        public void QuarantineReturn()
         {
             Debug.Log("Quarantine process activated: Ensuring platform returns safely.");
             
@@ -158,6 +160,11 @@ namespace PuzzleGame.Gimmicks
                     _field.gameObject.SetActive(true);
                 }
             }
+        }
+
+        public bool IsMoving()
+        {
+            return _isTriggered;
         }
     }
 }

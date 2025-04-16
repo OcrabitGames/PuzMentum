@@ -108,6 +108,11 @@ public class PlayerController : MonoBehaviour
     {
         // Destroy the current object
         Destroy(gameObject); 
+        
+        // Set new audio source
+        var cam = Camera.main;
+        if (cam != null) { cam.GetComponent<AudioListener>().enabled = true; }
+        
         // Update the winText to display "You Lose!"
         winTextObject.gameObject.SetActive(true);
         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";

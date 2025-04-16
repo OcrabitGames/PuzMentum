@@ -1,11 +1,12 @@
 using System.Collections;
-using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class BallRoller : MonoBehaviour
 {
+    // References
     private Rigidbody _rb;
+    private LevelManager _levelManager;
     
     // Move Vals
     private float movementX;
@@ -13,12 +14,14 @@ public class BallRoller : MonoBehaviour
     
     // Public Values
     public float speed = 0;
+    public float resetLimit = -10f;
     public Transform cameraTransform;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb = GetComponent<Rigidbody>(); 
+        _levelManager = LevelManager.Instance;
     }
     
     // Physics Based Movement
@@ -26,6 +29,9 @@ public class BallRoller : MonoBehaviour
     {
         if (!cameraTransform) return;
         
+        // Check Height
+        CheckFall();
+
         // Get Camera Forward Direction
         Vector3 forward = cameraTransform.forward;
         forward.y = 0;
@@ -49,24 +55,21 @@ public class BallRoller : MonoBehaviour
         movementX = movementVector.x; 
         movementY = movementVector.y;
     }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void CheckFall()
+    {
+        if (transform.position.y < resetLimit)
+        {
+            _levelManager.RestartLevel();
+        }
+    }
     
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            StartCoroutine(RestartLevel());
+            LevelManager.Instance.RestartLevel(); 
         }
-    }
-    
-    // ReSharper disable Unity.PerformanceAnalysis
-    private IEnumerator RestartLevel()
-    {
-        // Destroy Player
-        //Destroy(gameObject);
-        
-        float delay = 3f;
-        yield return new WaitForSeconds(delay); // Wait for specified time
-        LevelManager.Instance.RestartLevel(); 
-        Debug.Log("Restarting Level...");
     }
 }

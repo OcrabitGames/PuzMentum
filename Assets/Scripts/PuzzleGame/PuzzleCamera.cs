@@ -6,6 +6,9 @@ public class PuzzleCamera : MonoBehaviour
     public float rotationSpeed = 3.0f;  // Speed of rotation
     public float minYAngle = -20f;      // Min vertical angle (to prevent flipping)
     public float maxYAngle = 60f;       // Max vertical angle
+    public float zoomSpeed = 2f;        // Speed of zooming
+    public float minZoom = 2f;          // Closest the camera can zoom in
+    public float maxZoom = 10f;         // Farthest the camera can zoom out
 
     private float yaw = 0f; // Horizontal rotation
     private float pitch = 10f; // Vertical rotation (default starting angle)
@@ -34,10 +37,20 @@ public class PuzzleCamera : MonoBehaviour
             pitch -= mouseY;
             pitch = Mathf.Clamp(pitch, minYAngle, maxYAngle); // Restrict vertical rotation
 
+            // Handle zooming
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (scroll != 0f)
+            {
+                float distance = offset.magnitude;
+                distance -= scroll * zoomSpeed;
+                distance = Mathf.Clamp(distance, minZoom, maxZoom);
+                offset = offset.normalized * distance;
+            }
+
             // Convert yaw & pitch into a rotation
             Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
 
-            // Apply rotation while maintaining the original distance (offset)
+            // Apply rotation while maintaining the updated offset
             transform.position = player.transform.position + rotation * offset;
 
             // Make sure the camera is always looking at the player

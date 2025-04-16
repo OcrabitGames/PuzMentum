@@ -50,3 +50,7 @@ MonoBehaviour:
     requiredKeys: 2
   - sceneName: Puzzle2
     requiredKeys: 3
+  - sceneName: Puzzle3
+    requiredKeys: 4
+  - sceneName: Puzzle4
+    requiredKeys: 4
