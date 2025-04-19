@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
     public bool debugMode;
+    private bool _paused = false;
     
     public delegate void OnSceneLoaded();
     public static event OnSceneLoaded SceneLoadedEvent;
@@ -14,12 +16,14 @@ public class LevelManager : MonoBehaviour
     {
         public string sceneName;
         public int requiredKeys;
+        public float[] starThresholds = new float[3];
     }
     
     public LevelData[] levels; // Array of levels (set in Inspector)
+    public string activeSceneName = "Menu";
     private int _currentLevelIndex = 0;
     private int _keysCollected = 0;
-    private int _maxLevelUnlocked = 0;
+    private int _maxLevelUnlocked;
     
     private void Awake()
     {
@@ -37,24 +41,47 @@ public class LevelManager : MonoBehaviour
     
     private void Start()
     {
-        if (debugMode) return;
+        // Pull Highest Unlocked Level
+        _maxLevelUnlocked = PlayerPrefs.GetInt("MaxLevelUnlocked", 0);
         
-        // if (SceneManager.GetActiveScene().name != levels[currentLevelIndex].sceneName)
-        // {
-        //     SceneManager.LoadScene(levels[currentLevelIndex].sceneName);
-        // }
+        if (debugMode)
+        {
+            // Set Active Scene Number
+            activeSceneName = SceneManager.GetActiveScene().name;
+            var match = Regex.Match(activeSceneName, @"\d+");
+            if (match.Success)
+            {
+                int levelNumber = int.Parse(match.Value);
+                Debug.Log($"Parsed level number: {levelNumber}");
+                // Optionally use levelNumber for anything you want here
+                _currentLevelIndex = levelNumber - 1;
+            }
+            else
+            {
+                Debug.LogWarning("No number found in scene name.");
+            }
+        }
+    }
+
+    private bool CheckIfActiveSceneIsLevel()
+    {
+        var match = Regex.Match(activeSceneName, @"\d+");
+        return match.Success;
     }
     
     public void LoadLevel(int index)
     {
         if (index < levels.Length && index <= _maxLevelUnlocked)
         {
+            // Get Next Scene Ready
             _currentLevelIndex = index;
             _keysCollected = 0; // Reset collected keys
-            SceneManager.LoadScene(levels[index].sceneName);
+            activeSceneName = levels[index].sceneName;
+            SetPaused(false);
+            SceneManager.LoadScene(activeSceneName);
             
             // Create an intial loading screen
-            Debug.Log($"Loading {levels[index].sceneName}...");
+            Debug.Log($"Loading {activeSceneName}...");
         } else {
             print("Level not unlocked!");
         }
@@ -67,15 +94,48 @@ public class LevelManager : MonoBehaviour
         Debug.Log($"Keys Collected: {_keysCollected}/{levels[_currentLevelIndex].requiredKeys}");
     }
 
-    private void UpdateKeyText()
+    private void UpdateCanvasController()
     {
         var instanceRef = CoreCanvasController.Instance;
         if (instanceRef)
         {
-            instanceRef.UpdateKeyScoreText(_keysCollected, levels[_currentLevelIndex].requiredKeys);
+            var isLevel = CheckIfActiveSceneIsLevel();
+            if (isLevel)
+            {
+                instanceRef.UpdateKeyScoreText(_keysCollected, levels[_currentLevelIndex].requiredKeys);
+                instanceRef.ResetTimer();
+                instanceRef.ActivateLevel();
+                instanceRef.SetTimerPause(false);
+            } else {
+                instanceRef.DeactivateLevel();
+            }
         }
     }
 
+    public void CheckSaveRoundTime()
+    {
+        if (CoreCanvasController.Instance.isLevel)
+        {
+            var currenRoundTime = CoreCanvasController.Instance.GetRoundTime();
+            var currentSetFloat = PlayerPrefs.GetFloat($"BestTime_{_currentLevelIndex}", float.MaxValue);
+            print($"Current Set Best Time: {currentSetFloat}");
+            if (currenRoundTime < currentSetFloat)
+            {
+                PlayerPrefs.SetFloat($"BestTime_{_currentLevelIndex}", currenRoundTime);
+                print($"Set Best Time for level {_currentLevelIndex}");
+                print($"Set New RECORD: {currenRoundTime}");
+                PlayerPrefs.Save();
+            }
+
+            CoreCanvasController.Instance.SetTimerPause(true);
+        }
+    }
+    
+    public void UpdateRoundTime()
+    {
+
+    }
+    
     public bool CheckConditions()
     {
         return _keysCollected >= levels[_currentLevelIndex].requiredKeys;
@@ -87,8 +147,6 @@ public class LevelManager : MonoBehaviour
             int nextLevelIndex = _currentLevelIndex + 1;
             if (nextLevelIndex < levels.Length)
             {
-                // Increment Highest Unlock Level
-                if (nextLevelIndex > _maxLevelUnlocked)  { _maxLevelUnlocked++; }
                 LoadLevel(nextLevelIndex);
             }
             else
@@ -103,6 +161,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void CheckSaveNextLevel()
+    {
+        // Increment Highest Unlock Level
+        if (_currentLevelIndex + 1 > _maxLevelUnlocked)
+        {
+            _maxLevelUnlocked++;
+            PlayerPrefs.SetInt("MaxLevelUnlocked", _maxLevelUnlocked);
+        }
+    }
+
     public void LoadHighestUnlockedLevel()
     {
         LoadLevel(_maxLevelUnlocked);
@@ -111,24 +179,27 @@ public class LevelManager : MonoBehaviour
     public void RestartLevel()
     {
         LoadLevel(_currentLevelIndex);
-        _keysCollected = 0;
     }
 
     public void GoToMiniGame()
     {
-        SceneManager.LoadScene("MiniGame");
+        Debug.Log("Going to MiniGame...");
+        activeSceneName = "MiniGame";
+        SceneManager.LoadScene(activeSceneName);
     }
     
     public void GoToMenu()
     {
-        Debug.Log("Going to menu");
-        SceneManager.LoadScene("Menu");
+        Debug.Log("Going to menu...");
+        activeSceneName = "Menu";
+        SceneManager.LoadScene(activeSceneName);
     }
     
     public void GoToLevelSelect()
     {
-        Debug.Log("Going to level select");
-        SceneManager.LoadScene("Levels");
+        Debug.Log("Going to level select...");
+        activeSceneName = "Levels";
+        SceneManager.LoadScene(activeSceneName);
     }
     
     public void QuitGame()
@@ -141,12 +212,26 @@ public class LevelManager : MonoBehaviour
         return _maxLevelUnlocked;
     }
     
+    public float[] GetThresholdsForLevel(int levelIndex)
+    {
+        return levels[levelIndex].starThresholds;
+    }
+
+    public bool IsPaused()
+    {
+        return _paused;
+    }
+
+    public void SetPaused(bool paused)
+    {
+        _paused = paused;
+    }
     
     // Handle On Scene Load
     private void OnSceneLoadedCallback(Scene scene, LoadSceneMode mode)
     {
         SceneLoadedEvent?.Invoke();
-        UpdateKeyText();
+        UpdateCanvasController();
     }
     
     private void OnDestroy()

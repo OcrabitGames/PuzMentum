@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class KeyRotator : MonoBehaviour
+namespace PuzzleGame.Structures_Items
 {
-    // Update is called once per frame
-    void Update()
+    public class KeyRotator : MonoBehaviour
     {
-        transform.Rotate(new Vector3 (45, 45, 45) * Time.deltaTime);
+        // Update is called once per frame
+        void Update()
+        {
+            transform.Rotate(new Vector3 (45, 45, 45) * Time.deltaTime);
+        }
     }
 }

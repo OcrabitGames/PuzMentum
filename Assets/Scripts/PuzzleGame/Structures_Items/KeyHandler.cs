@@ -1,72 +1,76 @@
-using PuzzleGame;
+using Audio;
 using UnityEngine;
 
-public class KeyHandler : MonoBehaviour
+namespace PuzzleGame.Structures_Items
 {
-    public float moveSpeed = 2.0f;   // Speed of movement towards assigned position
-    public float rotationSpeed = 45f; // Rotation speed
-    private Vector3 targetOffset; // The position relative to the player
-    private Transform player;
-    private KeyManager keyManager;
-    private bool unlockingGate = false;
-    private Vector3 gateTarget;
-
-    void Update()
+    public class KeyHandler : MonoBehaviour
     {
-        if (unlockingGate)
-        {
-            // Move towards the gate
-            transform.position = Vector3.Lerp(transform.position, gateTarget, Time.deltaTime * moveSpeed);
+        public float moveSpeed = 2.0f;   // Speed of movement towards assigned position
+        public float rotationSpeed = 45f; // Rotation speed
+        private Vector3 targetOffset; // The position relative to the player
+        private Transform player;
+        private KeyManager keyManager;
+        private bool unlockingGate = false;
+        private Vector3 gateTarget;
 
-            // Despawn when close enough
-            if (Vector3.Distance(transform.position, gateTarget) < 0.1f)
+        void Update()
+        {
+            if (unlockingGate)
             {
-                keyManager.RemoveKeyFromList(this);
-                Destroy(gameObject);
+                // Move towards the gate
+                transform.position = Vector3.Lerp(transform.position, gateTarget, Time.deltaTime * moveSpeed);
+
+                // Despawn when close enough
+                if (Vector3.Distance(transform.position, gateTarget) < 0.1f)
+                {
+                    keyManager.RemoveKeyFromList(this);
+                    Destroy(gameObject);
+                }
+            }
+            else if (player)
+            {
+                // Maintain relative position around the player
+                Vector3 targetPosition = player.position + targetOffset;
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+
+                // Rotate while hovering
+                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
             }
         }
-        else if (player)
+
+        public void StartUnlockingGate(Vector3 gateLocation)
         {
-            // Maintain relative position around the player
-            Vector3 targetPosition = player.position + targetOffset;
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-
-            // Rotate while hovering
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+            unlockingGate = true;
+            gateTarget = gateLocation;
         }
-    }
-
-    public void StartUnlockingGate(Vector3 gateLocation)
-    {
-        unlockingGate = true;
-        gateTarget = gateLocation;
-    }
     
-    public void SetTargetOffset(Vector3 offset)
-    {
-        targetOffset = offset;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        public void SetTargetOffset(Vector3 offset)
         {
-            player = other.transform;
+            targetOffset = offset;
+        }
 
-            // Disable physics after collecting
-            GetComponent<Collider>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = true;
-
-            keyManager = other.GetComponent<KeyManager>();
-            if (keyManager)
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
             {
-                keyManager.AddKey(this);
+                player = other.transform;
+
+                // Disable physics after collecting
+                GetComponent<Collider>().enabled = false;
+                GetComponent<Rigidbody>().isKinematic = true;
+
+                keyManager = other.GetComponent<KeyManager>();
+                if (keyManager)
+                {
+                    keyManager.AddKey(this);
+                }
+            
+                // Play Collect Sound and Effect
+                SoundManager.Instance.GenericPlaySound("KeyPickup");
+                //other.GetComponent<PuzzleSoundManager>().PlayKeyPickupSound();
+                other.GetComponent<FX_Player>().PlayFXCollect();
+            
             }
-            
-            // Play Collect Sound and Effect
-            other.GetComponent<PuzzleSoundManager>().PlayKeyPickupSound();
-            other.GetComponent<FX_Player>().PlayFXCollect();
-            
         }
     }
 }

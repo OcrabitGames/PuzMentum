@@ -1,13 +1,15 @@
-using System;
 using UnityEngine;
 
-public class GateEntry : MonoBehaviour
+namespace PuzzleGame.Structures_Items
 {
-    private void OnTriggerEnter(Collider other)
+    public class GateEntry : MonoBehaviour
     {
-        if (other.gameObject.CompareTag("Player"))
+        private void OnTriggerEnter(Collider other)
         {
-            LevelManager.Instance.NextLevel();
+            if (other.gameObject.CompareTag("Player"))
+            {
+                LevelManager.Instance.NextLevel();
+            }
         }
     }
 }

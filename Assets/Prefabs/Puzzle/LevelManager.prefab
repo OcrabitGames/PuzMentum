@@ -48,9 +48,26 @@ MonoBehaviour:
   levels:
   - sceneName: Puzzle1
     requiredKeys: 2
+    starThresholds:
+    - 45
+    - 25
+    - 20
   - sceneName: Puzzle2
     requiredKeys: 3
+    starThresholds:
+    - 90
+    - 60
+    - 45
   - sceneName: Puzzle3
     requiredKeys: 4
+    starThresholds:
+    - 70
+    - 55
+    - 31
   - sceneName: Puzzle4
-    requiredKeys: 4
+    requiredKeys: 5
+    starThresholds:
+    - 200
+    - 140
+    - 80
+  activeSceneName: Menu

@@ -1,42 +1,43 @@
+using Audio;
 using UnityEngine;
 
-public class AfterimageCreator : MonoBehaviour
+namespace PuzzleGame
 {
-    bool afterImageCreated = false;
+    public class AfterimageCreator : MonoBehaviour
+    {
+        private bool _afterImageCreated = false;
     
-    // Afterimage Prefab 
-    public GameObject afterImagePrefab;
-    GameObject afterImageContainer;
+        // Afterimage Prefab 
+        public GameObject afterImagePrefab;
+        private GameObject _afterImageContainer;
+        private SoundManager _soundManager;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+            _soundManager = SoundManager.Instance;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        bool keyPress = Input.GetKeyDown(KeyCode.Space);
-        if (keyPress)
+        // Update is called once per frame
+        void Update()
         {
-            SpawnAfterImage();
+            bool keyPress = Input.GetKeyDown(KeyCode.Space);
+            if (keyPress)
+            {
+                SpawnAfterImage();
+                _soundManager.GenericPlaySound("AfterImage", 0.55f);
+            }
         }
-    }
 
-    void SpawnAfterImage()
-    {
-        if (!afterImageCreated)
+        void SpawnAfterImage()
         {
-            afterImageContainer = Instantiate(afterImagePrefab, gameObject.transform.position, gameObject.transform.rotation);
-            afterImageCreated = true;
+            if (_afterImageCreated)
+            {
+                Destroy(_afterImageContainer);
+            }
+
+            _afterImageContainer = Instantiate(afterImagePrefab, transform.position, transform.rotation);
+            _afterImageCreated = true;
         }
-        else
-        {
-            Destroy(afterImageContainer);
-            afterImageCreated = false;
-            SpawnAfterImage();
-        }
-        
     }
 }

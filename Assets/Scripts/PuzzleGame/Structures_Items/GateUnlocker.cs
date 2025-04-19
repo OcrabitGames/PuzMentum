@@ -1,15 +1,29 @@
 using System;
+using Audio;
 using UnityEngine;
 
-public class GateUnlocker : MonoBehaviour
+namespace PuzzleGame.Structures_Items
 {
-    private void OnCollisionEnter(Collision other)
+    public class GateUnlocker : MonoBehaviour
     {
-        if (other.gameObject.CompareTag("Player"))
+        public bool type1Gate = true;
+        private string _soundName;
+        private void Start()
         {
-            if (LevelManager.Instance.CheckConditions())
+            _soundName = $"GateUnlock#{(type1Gate ? 1 : 2)}";
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<KeyManager>().UnlockGate(gameObject);
+                if (LevelManager.Instance.CheckConditions())
+                {
+                    LevelManager.Instance.CheckSaveRoundTime();
+                    LevelManager.Instance.CheckSaveNextLevel();
+                    SoundManager.Instance.GenericPlaySound(_soundName, 0.3f);
+                    other.gameObject.GetComponent<KeyManager>().UnlockGate(gameObject);
+                }
             }
         }
     }
