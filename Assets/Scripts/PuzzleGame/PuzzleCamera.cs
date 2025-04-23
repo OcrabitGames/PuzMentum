@@ -29,6 +29,20 @@ namespace PuzzleGame
             Vector3 angles = transform.eulerAngles;
             yaw = angles.y;
             pitch = angles.x;
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                bool isLocked = Cursor.lockState == CursorLockMode.Locked;
+
+                Cursor.lockState = isLocked ? CursorLockMode.None : CursorLockMode.Locked;
+                Cursor.visible = isLocked;
+            }
         }
 
         void LateUpdate()

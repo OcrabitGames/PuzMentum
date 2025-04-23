@@ -24,6 +24,7 @@ public class CoreCanvasController : MonoBehaviour
     public bool isLevel = true;
     private float _roundTimer;
     private bool _timerPaused = false;
+    private float _rKeyHoldTime = 0f;
     
     // References
     private LevelManager _levelManager;
@@ -40,8 +41,27 @@ public class CoreCanvasController : MonoBehaviour
     {
         if (!isLevel) return;
         if (_timerPaused) return;
+        CheckRestartKey();
         
         UpdateTimer();
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void CheckRestartKey()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            _rKeyHoldTime += Time.deltaTime;
+            if (_rKeyHoldTime >= 1.5f)
+            {
+                RestartLevel();
+                _rKeyHoldTime = 0f;
+            }
+        }
+        else
+        {
+            _rKeyHoldTime = 0f;
+        }
     }
 
     public void RestartLevel()
