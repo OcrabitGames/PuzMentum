@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,12 +23,18 @@ namespace Audio
             }
         }
     
+        // Main Music
+        public AudioClip[] mainClips;
+        [SerializeField] private int currentMainIndex = 0;
+        private int? _pendingLevelIndex = null;
+        
+        // Clips
         private AudioSource _mainAudioSource;
         private AudioSource _sideAudioSource;
+        private AudioSource _levelAudioSource;
         public List<SoundClipPair> ClipList;
         private Dictionary<string, AudioClip> ClipDictionary;
         public bool onMenuScreen = true;
-        private bool _cachedMenuBool = false;
         private float _sfxVolume;
     
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,10 +43,10 @@ namespace Audio
             var audioSources = GetComponents<AudioSource>();
             _mainAudioSource = audioSources[0];
             _sideAudioSource = audioSources[1];
+            _levelAudioSource = audioSources[2];
         
             // Set Initial Volumes
-            _sideAudioSource.volume = PlayerPrefs.GetFloat("SfxVolume", 1f);
-            _mainAudioSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            UpdateSoundSettings();
         
             // Set Clips
             ClipDictionary = new Dictionary<string, AudioClip>();
@@ -50,23 +57,95 @@ namespace Audio
                     ClipDictionary[pair.name] = pair.clip;
                 }
             }
-            SetMainAudio();
-        }
-    
-        public void SetMainAudio()
-        {
-            if (_cachedMenuBool != onMenuScreen)
+            if (onMenuScreen)
             {
-                // Set Cached Value
-                _cachedMenuBool = onMenuScreen;
-            
-                print("Inside Cached Check");
-                _mainAudioSource.Stop();
-                _mainAudioSource.loop = true;
-                _mainAudioSource.clip = onMenuScreen ? GenericGetSound("MenuMusic") : GenericGetSound("GameMusic"); 
-                _mainAudioSource.Play();
+                PlayNextMainClip();
             }
         }
+
+        private void PlayNextMainClip()
+        {
+            if (!CoreCanvasController.Instance.isLevel || PlayerPrefs.GetInt("ProgressiveSoundtrack", 0) == 0)
+            {
+                _mainAudioSource.clip = mainClips[currentMainIndex];
+                _mainAudioSource.Play();
+                StartCoroutine(ScheduleNextMainClip());
+            }
+        }
+
+        private IEnumerator ScheduleNextMainClip()
+        {
+            double startTime = AudioSettings.dspTime;
+            double endTime = startTime + _mainAudioSource.clip.length;
+
+            yield return new WaitUntil(() => AudioSettings.dspTime >= endTime);
+
+            if (_pendingLevelIndex.HasValue)
+            {
+                SetLevelMusic(_pendingLevelIndex.Value);
+                _pendingLevelIndex = null;
+            }
+            else if (!CoreCanvasController.Instance.isLevel || PlayerPrefs.GetInt("ProgressiveSoundtrack", 0) == 0)
+            {
+                currentMainIndex = (currentMainIndex + 1) % mainClips.Length;
+                PlayNextMainClip();
+            }
+        }
+
+        public void HandleEnterLevel(int levelIndex)
+        {
+            if (_levelAudioSource.isPlaying)
+            {
+                StartCoroutine(ScheduleLevelMusic(levelIndex));
+            }
+            else
+            {
+                _pendingLevelIndex = levelIndex;
+            }
+        }
+
+        private void SetLevelMusic(int index)
+        {
+            var clip = LevelManager.Instance.levels[index].levelAudio;
+            _mainAudioSource.Pause();
+            if (clip)
+            {
+                _levelAudioSource.clip = clip;
+                _levelAudioSource.loop = true;
+                _levelAudioSource.Play();
+            }
+        }
+
+        private IEnumerator ScheduleLevelMusic(int index)
+        {
+            double curTime = AudioSettings.dspTime;
+            double endTime = curTime + (_levelAudioSource.clip.length - _levelAudioSource.time);
+
+            yield return new WaitUntil(() => AudioSettings.dspTime >= endTime);
+
+            SetLevelMusic(index);
+        }
+        
+        public void ReturnToMain()
+        {
+            _levelAudioSource.Stop();
+            PlayNextMainClip();
+        }
+    
+        // public void SetMainAudio()
+        // {
+        //     if (_cachedMenuBool != onMenuScreen)
+        //     {
+        //         // Set Cached Value
+        //         _cachedMenuBool = onMenuScreen;
+        //     
+        //         print("Inside Cached Check");
+        //         _mainAudioSource.Stop();
+        //         _mainAudioSource.loop = true;
+        //         _mainAudioSource.clip = onMenuScreen ? GenericGetSound("MenuMusic") : GenericGetSound("GameMusic"); 
+        //         _mainAudioSource.Play();
+        //     }
+        // }
 
         public void PlayClick()
         {
@@ -121,7 +200,9 @@ namespace Audio
         public void UpdateSoundSettings()
         {
             _sideAudioSource.volume = PlayerPrefs.GetFloat("SfxVolume", 1f);
-            _mainAudioSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            var musicVol = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            _mainAudioSource.volume = musicVol;
+            _levelAudioSource.volume = musicVol;
         }
     }
 }

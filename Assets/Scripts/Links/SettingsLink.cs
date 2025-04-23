@@ -11,6 +11,7 @@ namespace Links
         private float _currentSfxVolume;
         private float _currentMusicVolume;
         private bool _invertedY;
+        private bool _progressiveSoundtrack;
         private Coroutine _saveRoutine;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,6 +39,12 @@ namespace Links
             _invertedY = inverted;
             ScheduleSave();
         }
+        
+        public void SetProgressiveSoundtrack(bool val)
+        {
+            _progressiveSoundtrack = val;
+            ScheduleSave();
+        }
     
         private void ScheduleSave()
         {
@@ -54,6 +61,7 @@ namespace Links
             PlayerPrefs.SetFloat("SfxVolume", _currentSfxVolume);
             PlayerPrefs.SetFloat("MusicVolume", _currentMusicVolume);
             PlayerPrefs.SetInt("InvertedYAxis", _invertedY ? 1 : 0);
+            PlayerPrefs.SetInt("ProgressiveSoundtrack", _progressiveSoundtrack ? 1 : 0);
             PlayerPrefs.Save();
             // Update Use Cases
             _soundManager.UpdateSoundSettings();

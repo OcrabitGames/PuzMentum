@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,7 @@ public class LevelManager : MonoBehaviour
         public string sceneName;
         public int requiredKeys;
         public float[] starThresholds = new float[3];
+        public AudioClip levelAudio;
     }
     
     public LevelData[] levels; // Array of levels (set in Inspector)
@@ -78,6 +80,14 @@ public class LevelManager : MonoBehaviour
             _keysCollected = 0; // Reset collected keys
             activeSceneName = levels[index].sceneName;
             SetPaused(false);
+            
+            // Audio Handler
+            if (PlayerPrefs.GetInt("ProgressiveSoundtrack", 0) == 1)
+            {
+                SoundManager.Instance.HandleEnterLevel(index);
+            }
+            
+            // Load Scene
             SceneManager.LoadScene(activeSceneName);
             
             // Create an intial loading screen
@@ -192,6 +202,14 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Going to menu...");
         activeSceneName = "Menu";
+        
+        // Handle Audio
+        if (PlayerPrefs.GetInt("ProgressiveSoundtrack", 0) == 1)
+        {
+            SoundManager.Instance.ReturnToMain();
+        }
+        
+        // Load Scene
         SceneManager.LoadScene(activeSceneName);
     }
     

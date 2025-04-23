@@ -52,22 +52,26 @@ MonoBehaviour:
     - 45
     - 25
     - 20
+    levelAudio: {fileID: 8300000, guid: 2f999944e404e4219a86d45bb9d42025, type: 3}
   - sceneName: Puzzle2
     requiredKeys: 3
     starThresholds:
     - 90
     - 60
     - 45
+    levelAudio: {fileID: 8300000, guid: 0b23eef72cd364663bbf4174823356fd, type: 3}
   - sceneName: Puzzle3
     requiredKeys: 4
     starThresholds:
     - 70
     - 55
     - 31
+    levelAudio: {fileID: 8300000, guid: 251c6ee9ad552492f81c27f879b0d08d, type: 3}
   - sceneName: Puzzle4
     requiredKeys: 5
     starThresholds:
     - 200
     - 140
     - 80
+    levelAudio: {fileID: 8300000, guid: 8e6875af6d0354ac6a59d7894674e513, type: 3}
   activeSceneName: Menu

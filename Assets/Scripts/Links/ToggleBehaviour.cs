@@ -16,7 +16,13 @@ namespace Links
         
             if (_toggle)
             {
-                _toggle.enabled = PlayerPrefs.GetInt(valueName, 1) == 1;
+                _toggle.isOn = PlayerPrefs.GetInt(valueName, 1) == 1;
+                print($"Set toggle to {_toggle.isOn}");
+                
+                _toggle.onValueChanged.AddListener((value) =>
+                {
+                    print("Toggle Pressed");
+                });
             }
         }
     }
